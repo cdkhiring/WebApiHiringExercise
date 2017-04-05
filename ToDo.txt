@@ -1,0 +1,2 @@
+In AppointmentController, move DB Access to service
+Change return type of GetAppointments so that it returns a string with vehicle data, rather than individual parts
