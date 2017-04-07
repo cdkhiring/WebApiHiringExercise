@@ -1,0 +1,2 @@
+- Work Items
+  - Get Entity Framework code into services, and out of the controllers

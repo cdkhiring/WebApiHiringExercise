@@ -17,25 +17,50 @@ CREATE TABLE dbo.Vehicle
 	,Color nvarchar(20) NULL
 );
 
-CREATE TABLE dbo.AppointmentStatus
+CREATE TABLE dbo.RepairOrderStatus
 (
-	AppointmentStatusID int primary key identity(1,1)
+	RepairOrderStatusID int primary key identity(1,1)
 	,Name nvarchar(20) Not Null
 );
 
-CREATE TABLE dbo.Appointment
+CREATE TABLE dbo.RepairOrder
 (
-	AppointmentID int primary key identity(1,1)
-	,AppointmentStatusID int NOT NULL
+	RepairOrderID int primary key identity(1,1)
+	,RepairOrderStatusID int NOT NULL
 	,VehicleID int NOT NULL
-	,AppointmentDate datetime2(7) NOT NULL
+	,RepairOrderDate datetime2(7) NOT NULL
 );
 
-ALTER TABLE dbo.Appointment ADD CONSTRAINT FK_Appointment_AppointmentStatus
-FOREIGN KEY (AppointmentStatusID) REFERENCES AppointmentStatus(AppointmentStatusID);
+ALTER TABLE dbo.RepairOrder ADD CONSTRAINT FK_RepairOrder_RepairOrderStatus
+FOREIGN KEY (RepairOrderStatusID) REFERENCES RepairOrderStatus(RepairOrderStatusID);
 
-ALTER TABLE dbo.Appointment ADD CONSTRAINT FK_Appointment_Vehicle
+ALTER TABLE dbo.RepairOrder ADD CONSTRAINT FK_RepairOrder_Vehicle
 FOREIGN KEY (VehicleID) REFERENCES Vehicle(VehicleID);
+
+CREATE TABLE dbo.OpCode
+(
+	OpCodeId int primary key identity(1,1)
+	,OpCode nvarchar(10) NOT NULL
+	,[Description] nvarchar(100) NULL
+	,Category nvarchar(50) NULL
+	,PartsCost money NOT NULL
+	,LaborCost money NOT NULL
+	,EstimatedHours decimal(4,2)
+);
+
+CREATE TABLE dbo.ServiceLine
+(
+	ServieLineId int primary key identity(1,1)
+	,RepairOrderId int NOT NULL
+	,OpCodeId int NOT NULL
+	,MiscellaneousFee money NULL
+);
+
+ALTER TABLE dbo.ServiceLine ADD CONSTRAINT FK_ServiceLine_RepairOrder
+FOREIGN KEY (RepairOrderId) REFERENCES RepairOrder(RepairOrderId);
+
+ALTER TABLE dbo.ServiceLine ADD CONSTRAINT FK_ServiceLine_OpCode
+FOREIGN KEY (OpCodeId) REFERENCES OpCode(OpCodeId);
 
 GO
 
@@ -52,14 +77,14 @@ INSERT INTO dbo.Vehicle (VIN, [Year], Make, Model, Color) VALUES
 ('3MEHM0JA0AR612164', 2010, 'Mercury', 'Milan', 'White'),
 ('5J8TB1H28CA001688', 2012, 'Acura', 'RDX', 'Charcoal');
 
-INSERT INTO dbo.AppointmentStatus (Name) VALUES
+INSERT INTO dbo.RepairOrderStatus (Name) VALUES
 ('Scheduled'),
 ('No Show'),
 ('Working'),
 ('Completed'),
 ('Canceled');
 
-INSERT INTO dbo.Appointment (AppointmentStatusID, VehicleID, AppointmentDate) VALUES
+INSERT INTO dbo.RepairOrder (RepairOrderStatusID, VehicleID, RepairOrderDate) VALUES
 (1, 1, @Now),
 (1, 2, @Now),
 (2, 3, DateAdd(Day, 1, @Now)),
@@ -69,3 +94,29 @@ INSERT INTO dbo.Appointment (AppointmentStatusID, VehicleID, AppointmentDate) VA
 (5, 7, @Now),
 (1, 8, DateAdd(Day, 1, @Now)),
 (3, 9, DateAdd(Day, 4, @Now));
+
+INSERT INTO dbo.OpCode(OpCode, [Description], Category, PartsCost, LaborCost, EstimatedHours) VALUES
+('OILCNS', 'Oil Change (Non-Synthetic)', 'Lubrication', 29.99, 30, 1),
+('OILCPS', 'Oil Change (Partial Synthetic)', 'Lubrication', 39.99, 30, 1),
+('OILCFS', 'Oil Change (Full Synthetic)', 'Lubrication', 49.99, 30, 1),
+('BRKINSP', 'Brake Inspection', 'Brakes', 0, 0, 0.5),
+('BRKMD', 'Machine Discs', 'Brakes', 0, 10, 0.5),
+('BRKRS', 'Replace Shoes (1 Pair)', 'Brakes', 100, 50, 1),
+('BRKRD', 'Replace Discs (1 Pair)', 'Brakes', 60, 50, 0.5);
+
+INSERT INTO dbo.ServiceLine(RepairOrderID, OpCodeId, MiscellaneousFee) VALUES
+(1, 1, 10),
+(2, 3, 0),
+(3, 4, 0),
+(3, 6, 10),
+(3, 7, 0),
+(4, 1, 10),
+(5, 3, 0),
+(6, 4, 0),
+(6, 6, 10),
+(6, 7, 0),
+(7, 1, 10),
+(8, 3, 0),
+(9, 4, 0),
+(9, 6, 10),
+(9, 7, 0);

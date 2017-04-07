@@ -4,13 +4,15 @@ using WebApiHiringExorcise.Domain.Entities;
 
 namespace WebApiHiringExorcise.Domain
 {
-    public class AppointmentContext : DbContext,  IAppointmentContext
+    public class RepairOrderContext : DbContext,  IRepairOrderContext
     {
-        public IDbSet<AppointmentStatus> AppointmentStatuses { get; set; }
+        public IDbSet<RepairOrderStatus> RepairOrderStatuses { get; set; }
         public IDbSet<Vehicle> Vehicles { get; set; }
-        public IDbSet<Appointment> Appointments { get; set; }
+        public IDbSet<RepairOrder> RepairOrders { get; set; }
+        public IDbSet<OpCode> OpCodes { get; set; }
+        public IDbSet<ServiceLine> ServiceLines { get; set; }
 
-        public AppointmentContext()
+        public RepairOrderContext()
             :base("defaultConnectionString")
         {
         }

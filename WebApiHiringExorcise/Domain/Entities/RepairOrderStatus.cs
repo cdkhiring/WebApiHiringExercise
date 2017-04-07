@@ -2,10 +2,10 @@
 
 namespace WebApiHiringExorcise.Domain.Entities
 {
-    public class AppointmentStatus
+    public class RepairOrderStatus
     {
         [Key]
-        public int AppointmentStatusId { get; set; }
+        public int RepairOrderStatusId { get; set; }
 
         [Required, StringLength(20)]
         public string Name { get; set; }
