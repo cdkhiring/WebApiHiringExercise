@@ -14,6 +14,7 @@ namespace WebApiHiringExorcise.ViewModels
         public decimal PartsCost { get; set; }
         public decimal LaborCost { get; set; }
         public decimal MiscellaneousFees { get; set; }
+        public decimal EstmatedHours { get; set; }
         public decimal TotalCost { get; set; }
     }
 }

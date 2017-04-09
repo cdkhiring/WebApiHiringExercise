@@ -93,7 +93,9 @@ INSERT INTO dbo.RepairOrder (RepairOrderStatusID, VehicleID, RepairOrderDate) VA
 (4, 6, DateAdd(Day, 2, @Now)),
 (5, 7, @Now),
 (1, 8, DateAdd(Day, 1, @Now)),
-(3, 9, DateAdd(Day, 4, @Now));
+(3, 9, DateAdd(Day, 4, @Now)),
+(1, 1, DateAdd(Month, 6, @Now)),
+(1, 1, DateAdd(Month, 11, @Now));
 
 INSERT INTO dbo.OpCode(OpCode, [Description], Category, PartsCost, LaborCost, EstimatedHours) VALUES
 ('OILCNS', 'Oil Change (Non-Synthetic)', 'Lubrication', 29.99, 30, 1),
@@ -119,4 +121,7 @@ INSERT INTO dbo.ServiceLine(RepairOrderID, OpCodeId, MiscellaneousFee) VALUES
 (8, 3, 0),
 (9, 4, 0),
 (9, 6, 10),
-(9, 7, 0);
+(9, 7, 0),
+(10, 3, 10),
+(10, 4, 0),
+(11, 3, 10);
