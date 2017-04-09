@@ -35,7 +35,7 @@ namespace WebApiHiringExorcise.Controllers
                                                      oc.EstimatedHours
                                                  })
                                     let estimatedHours = lines.Select(l => l.EstimatedHours).Sum()
-                                    let laborCost = lines.Select(l => l.LaborCost * l.EstimatedHours).Sum()
+                                    let laborCost = lines.Select(l => l.LaborCost).Sum()
                                     let partsCost = lines.Select(l => l.PartsCost).Sum()
                                     let miscCost = lines.Select(l => l.MiscellaneousFee).Sum()
                                     select new RepairOrderListViewModel
