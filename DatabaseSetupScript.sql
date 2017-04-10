@@ -1,10 +1,10 @@
 USE [master]
 GO
 
-CREATE DATABASE WebApiHiringExorcise
+CREATE DATABASE WebApiHiringExercise
 GO
 
-USE [WebApiHiringExorcise]
+USE [WebApiHiringExercise]
 GO
 
 CREATE TABLE dbo.Vehicle
