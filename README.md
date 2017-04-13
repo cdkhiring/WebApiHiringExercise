@@ -50,16 +50,16 @@ change to make sure that nothing has broken.
 
 #### Bugs
 
-- **GET /api/repairorders** - Labor and Total Costs are not being calculated correctly
+- ***(15 minutes)*** **GET /api/repairorders** - Labor and Total Costs are not being calculated correctly
   - Run the **GET /api/repairorders** endpoint
   - Look at RepairOrderId = 3
   - LaborCost is $100, and TotalCost is $270. This SHOULD be $75 and $245, respectively.
     - Look at the service lines and op codes for this repair order
 #### Changes
 
-- Create a new RESTful endpoint for getting a repair order by its VIN.
+- ***(10 minutes)*** Create a new RESTful endpoint for getting a repair order by its VIN.
   - If there are multiple repair orders for the VIN, the API should return the the closest upcoming repair order.
-- Create a SQL Server stored procedure for getting repair order status totals (for reporting purposes)
+- ***(15 minutes)*** Create a SQL Server stored procedure for getting repair order status totals (for reporting purposes)
   - For each repair order status, the stored procedure should calculate the total labor, parts, and miscellaneous costs, as well as the total costs, of all repairs in those status'. So, there should be 5 columns returned:
     - RepairOrderStatus
     - TotalLaborCost
